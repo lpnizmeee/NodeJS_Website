@@ -7,6 +7,11 @@ const port = 3000
 
 app.use(express.static(path.join(__dirname, 'public'))); 
 
+app.use(express.urlencoded({
+  extended: true
+})); // for parsing application/x-www-form-urlencoded
+app.use(express.json()); // for parsing application/json
+
 //HTTP logging
 app.use(morgan('combined'))
 
@@ -22,7 +27,17 @@ app.get('/', (req, res) => {
 })
 
 app.get('/news', (req, res) => {
+  console.log(req.query.q);
   res.render('news');
+})
+
+app.get('/search', (req, res) => {
+  res.render('search');
+})
+
+app.post('/search', (req, res) => {
+  console.log(req.body);
+  res.send('');
 })
 
 app.listen(port, () => {
